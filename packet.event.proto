@@ -1,0 +1,28 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+import public "pb/packet.entity.proto";
+import public "pb/packet.msg.proto";
+
+
+//好友申请,验证请求事件
+message FriendRequestEvent{
+    int32 id = 1;//验证消息ID
+    uint64 from_uid = 2;//请求方UID
+    uint64 to_uid = 3;//接收方UID
+    int64 request_time = 4;//请求添加时间
+    string reason = 5;//添加原因
+    int32 status = 6;//验证状态
+    int64 response_time = 7;//处理时间
+    string reject_reason = 8;//拒绝原因
+}
+
+//好友变动事件
+message FriendChangeEvent{
+    uint64 friend_id = 1;//好友的用户Id
+    Friend friend = 2;//好友信息
+    bool is_friend = 3;//true=新好友,false=删除好友
+    int64 time = 4;//事件时间
+}

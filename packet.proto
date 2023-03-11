@@ -1,0 +1,68 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+//数据包命令
+enum Packet {
+    PacketNone = 0;//不可用
+    SystemError = 500;//系统错误
+    UserNotLogin = 403;//用户未登录
+
+
+
+    //未登录
+    Login = 1001;//登录鉴权
+
+    
+
+    //个人信息
+    GetProfile = 2001;//获取当前账号信息
+    ModifyProfile = 2002;//修改当前账号信息
+    //用户
+    GetUser = 3001;//获取用户信息
+    
+    //好友
+    GetFriendList = 4001;//获取好友列表
+    GetFriend = 4002;//获取好友信息
+    RemoveFriend = 4003;//删除好友
+    FriendApply = 4004;//发起好友申请
+    FriendHandle = 4005;//处理好友申请
+
+    //群组
+
+
+    //消息发送
+    PrivateMsg = 8001;//私聊消息
+    PrivateMsgAck = 8002;//私聊消息已送达
+    PrivateMsgRead = 8003;//私聊消息已读
+    PrivateMsgList = 8010;//获取私聊消息列表
+
+
+
+    //系统事件Event
+
+    EventFriendRequest = 9001;//收到好友申请事件
+    EventFriendChange = 9002;//好友新增/删除事件
+    // DeviceOnline = 9003;//[未实现]当前账号其他设备登录/离线事件
+    
+}
+
+//状态码响应
+enum RetCode{
+    Unknown = 0;//系统未知内部错误
+    Success = 200;//请求成功,常规成功
+    Error = 500;//系统错误
+
+
+    UserNotFound = 3001;//没有找到用户
+    FriendNotFound = 4001;//不是好友关系
+    FriendAlready = 4002;//已经处于好友关系
+
+
+
+    NotRecord = 1001;//没有找到数据
+
+
+
+
+}

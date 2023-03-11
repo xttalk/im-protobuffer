@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+
+message LogicDataReq {
+    Packet command = 1;//命令
+    bytes data = 2;//数据包
+    string session_id = 3;//设备标识
+    uint32 server_id = 4;//服务器ID
+    uint64 user_id = 5;//用户Id,如果没有登录则0
+}
+message LogicDataRes {
+    Packet command = 1;//命令
+    bytes data = 2;//数据包
+    bool is_send = 3;//是否返回响应数据给客户端
+    uint64 user_id = 4;//用户ID
+}

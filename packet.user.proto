@@ -1,0 +1,16 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+import public "pb/packet.entity.proto";
+
+
+
+message PacketGetUserInfoReq{
+    string username = 1;//用户名
+}
+message PacketGetUserInfoResp{
+    RetCode ret_code = 1;//响应状态码
+    User user = 2;//用户信息
+}

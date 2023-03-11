@@ -1,0 +1,46 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+//消息类型枚举
+enum PacketMsgType{
+    None = 0;
+    Text = 1;//文字消息
+    Image = 2;//图片消息
+    Audio = 3;//语音消息
+    Video = 4;//视频消息
+    File = 5;//文件消息
+}
+
+
+//文字消息
+message TextMsg{
+    string content = 1;//文字内容
+}
+//图片消息
+message ImageMsg{
+    string url = 1;//图片Url地址
+    string md5 = 2;//图片MD5
+    int32 width = 3;//图片宽度
+    int32 height = 4;//图片高度
+    int32 size = 5;//图片大小
+}
+//语音消息
+message AudioMsg{
+    string url = 1;//语音Url地址
+    uint32 duration = 2;//语音时长,单位秒
+    int32 size = 3;//语音文件大小
+    string md5 = 4;//语音MD5
+}
+message VideoMsg{
+    string url = 1;//视频url地址
+    uint32 duration = 2;//视频时长,单位秒
+    int32 size = 3;//视频文件大小
+    string md5 = 4;//视频MD5
+}
+message FileMsg{
+    string url = 1;//文件url地址
+    string name = 2;//文件名称
+    int32 size = 3;//文件大小
+    string md5 = 4;//文件MD5
+}

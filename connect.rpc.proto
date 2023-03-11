@@ -1,0 +1,33 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+
+
+enum ConnectRetCode {
+    CR_Unknow = 0;//未知系统异常
+    CR_Success = 2001;//发送成功
+    CR_Offline = 2002;//用户设备离线
+    CR_Error = 5001;//发送异常
+}
+
+//向指定客户端发送数据
+message ConnectSendClientReq {
+    string session_id = 1;//session
+    uint32 server_id = 2;//所以在服务器
+    Packet command = 3;//命令
+    bytes payload = 4;//数据包
+}
+message ConnectSendClientRes {
+    ConnectRetCode ret_code = 1;//响应
+    string msg = 2;
+}
+
+message ConnectKickClientReq{
+    string session_id = 1;//session
+    uint32 server_id = 2;//所在服务器
+}
+message ConnectKickClientRes{
+    ConnectRetCode ret_code = 1;//响应
+}

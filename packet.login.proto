@@ -1,0 +1,14 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+//认证登录
+message PacketLoginReq {
+    string token = 1;//登录返回
+}
+//认证结果
+message PacketLoginRes {
+    RetCode ret_code = 1;//状态码
+    uint64 uid = 2;//用户Id
+}

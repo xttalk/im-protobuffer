@@ -1,0 +1,110 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+import public "pb/packet.entity.proto";
+import public "pb/packet.msg.proto";
+//获取好友列表
+message PacketGetFriendListReq {
+    int64 page = 1;//页数
+    int64 size = 2;//数量
+}
+//好友列表响应
+message PacketGetFriendListRes {
+    RetCode ret_code = 1;
+    repeated Friend list = 2;
+    Nav nav = 3;
+}
+
+
+
+//获取好友列表
+message PacketGetFriendReq {
+    uint64 user_id = 1;//好友的用户ID
+}
+//好友列表响应
+message PacketGetFriendRes {
+    RetCode ret_code = 1;
+    Friend friend = 2;
+}
+
+//私聊消息发送
+message PacketPrivateMsg {
+    int64 msg_seq = 1;//消息seq[客户端生成]
+    int64 msg_rand = 2;//消息随机值[客户端生成]
+    uint64 from_id = 3;//发送方用户ID
+    uint64 receive_id = 4;//接收方用户ID
+    PacketMsgType msg_type = 5;//消息类型
+    bytes payload = 6;//消息具体内容
+    int64 client_time = 7;//客户端消息发送时间
+    int64 server_time = 8;//服务端消息接收时间
+    bytes extends = 10;//字段扩展
+    int64 msg_id = 11;//消息ID[由服务端分布式生成]
+    int64 seq = 12; //时序ID,用于维护排序和时序顺序[由服务端生成]
+}
+
+//消息
+enum PacketMsgStatus {
+    MsgError = 0;//系统未知错误
+    MsgAck = 1;//消息已可靠投递
+    MsgRead = 2;//消息已被对方查看
+}
+//消息发送状态
+message PacketPrivateMsgAck {
+    int64 msg_seq = 1;//序列ID
+    int64 msg_rand = 2;//随机字符
+    PacketMsgStatus ret_code = 3;//消息状态
+    int64 msg_id = 4;//由服务端生成的分布式唯一ID
+    int64 seq = 5;//时序ID,用于维护排序和时序顺序
+}
+
+
+//拉取私聊消息列表请求
+message PacketPrivateMsgListReq {
+    int64 last_msg_id = 1;//分割ID,留空代表拉取最新消息
+    int64 size = 2;//拉取消息的数量,默认为20条
+    uint64 user_id = 3;//对方用户ID
+}
+
+message PacketPrivateMsgListResp{
+    RetCode ret_code = 1;//状态码
+    repeated PacketPrivateMsg list = 2;//消息列表
+    bool is_completed = 3;//是否拉取完毕
+}
+
+
+
+//删除好友请求
+message PacketRemoveFriendReq{
+    uint64 user_id = 1;//好友ID(不是关系ID,是好友的用户ID)
+}
+//删除好友响应
+message PacketRemoveFriendResp{
+    RetCode ret_code = 1;//状态码
+}
+
+
+//发起好友申请请求
+message PacketFriendApplyReq{
+    uint64 user_id = 1;//用户ID
+    string reason = 2;//申请原因
+}
+//发起好友申请请求响应
+message PacketFriendApplyResp{
+    RetCode ret_code = 1;//状态码
+    bool is_complete_friend = 2;//是否成为好友,前提是对方发起过好友申请
+    int32 id = 3;//验证ID
+}
+
+//处理好友申请
+message PacketFriendHandleReq{
+    int32 id = 1;//好友申请验证ID
+    bool flag = 2;//验证状态,true=同意,false=拒绝
+    string reject_reason = 3;//拒绝原因
+}
+//处理好友申请结果
+message PacketFriendHandleResp{
+    RetCode ret_code = 1;//状态码
+}
+

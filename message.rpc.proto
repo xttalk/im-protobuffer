@@ -1,0 +1,14 @@
+syntax = "proto3";
+package pb; // 定义自己的包名
+option go_package = "../server/pb"; // 指定生成go包的路径
+
+import public "pb/packet.proto";
+
+
+
+message MqMsg {
+    bytes data = 1;//消息数据
+    string session_id = 2;//设备标识
+    uint64 from_id = 3;//发送方ID,可能为0,根据业务处理
+    uint64 receive_id = 4;//消息接收ID,可能为0,根据业务事件类型
+}
