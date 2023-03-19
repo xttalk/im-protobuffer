@@ -32,8 +32,8 @@ message Friend{
     string username = 4;//好友账号
     string remark = 5;//好友备注
     string note = 6;//好友个人说明
-    int32 age = 7;//年龄
-    int32 sex = 8;//性别
+    uint32 age = 7;//年龄
+    uint32 sex = 8;//性别
 
 }
 
