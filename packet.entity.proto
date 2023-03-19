@@ -3,11 +3,25 @@ package pb; // 定义自己的包名
 option go_package = "../server/pb"; // 指定生成go包的路径
 
 
-//用户模型
-message User{
-    uint64 user_id = 1;//用户id
+//当前账号信息
+message SelfUser {
+    uint64 user_id = 1;//用户ID
     string nickname = 2;//用户昵称
     string username = 3;//用户账号
+    string note = 4;//个人说明 
+    uint32 age = 5;//年龄
+    uint32 sex = 6;//性别   
+    string email = 7;//邮箱
+}
+
+//陌生人用户模型
+message User{
+    uint64 user_id = 1;//用户ID
+    string nickname = 2;//用户昵称
+    string username = 3;//用户账号
+    string note = 4;//个人说明 
+    uint32 age = 5;//年龄
+    uint32 sex = 6;//性别   
 }
 
 //好友模型
@@ -17,6 +31,10 @@ message Friend{
     string nickname = 3;//好友昵称
     string username = 4;//好友账号
     string remark = 5;//好友备注
+    string note = 6;//好友个人说明
+    int32 age = 7;//年龄
+    int32 sex = 8;//性别
+
 }
 
 

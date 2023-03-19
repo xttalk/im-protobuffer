@@ -3,16 +3,12 @@ package pb; // 定义自己的包名
 option go_package = "../server/pb"; // 指定生成go包的路径
 
 import public "pb/packet.proto";
+import public "pb/packet.entity.proto";
 //获取当前用户信息
 message PacketGetProfileReq {}
 //用户信息响应
 message PacketGetProfileRes {
-    uint64 user_id = 2;//用户ID
-    string nick_name = 3;//用户昵称
-    string email = 4;//邮箱地址
-    string note = 5;//个人说明 
-    uint32 age = 6;//年龄
-    uint32 sex = 7;//性别   
+    SelfUser user = 1;
 }
 
 //修改当前用户信息
